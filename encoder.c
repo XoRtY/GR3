@@ -1,4 +1,6 @@
-#include "stdlib.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include "OCTET_STRING.h"
 #include "SimpleSyntax.h"
 #include "ObjectSyntax.h"
 #include "ObjectName.h"
@@ -12,10 +14,12 @@
 
 int main() {
 
+  printf("cenas");
+
   SimpleSyntax_t* simple;
   simple = calloc(1, sizeof(SimpleSyntax_t));
   simple->present = SimpleSyntax_PR_integer_value;
-  simple->choice.integer_value = 12345;
+  simple->choice.integer_value = 1;
 
   ObjectSyntax_t* object_syntax;
   object_syntax = calloc(1, sizeof(ObjectSyntax_t));
@@ -49,8 +53,8 @@ int main() {
   pdus->present = PDUs_PR_set_request;
   pdus->choice.set_request = *setRequestPDU;
 
-  uint8_t buffer;
-  uint8_t buffer_size = sizeof(buffer);
+  uint8_t buffer[1024];
+  size_t buffer_size = sizeof(buffer);
 
   asn_enc_rval_t ret = asn_encode_to_buffer(0, ATS_BER,&asn_DEF_PDUs, pdus, buffer, buffer_size);
 
@@ -60,6 +64,8 @@ int main() {
   data->size = ret.encoded;
 
   OCTET_STRING_t community;
+  community.buf = strdup("public");
+  community.size = 6;
   long version = 3;
 
   Message_t* message;
@@ -68,6 +74,11 @@ int main() {
   message->community = community;
   message->data = *data;
 
+  uint8_t buffer_final[1024];
+  size_t buffer_final_size = sizeof(buffer_final);
+
   asn_enc_rval_t retf = asn_encode_to_buffer(0, ATS_BER,&asn_DEF_Message, message, buffer_final, buffer_final_size);
+
+  xer_fprint(stdout, &asn_DEF_Message, message);
 
 }

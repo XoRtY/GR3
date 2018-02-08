@@ -14,8 +14,6 @@
 
 int main() {
 
-  printf("cenas");
-
   SimpleSyntax_t* simple;
   simple = calloc(1, sizeof(SimpleSyntax_t));
   simple->present = SimpleSyntax_PR_integer_value;
@@ -79,6 +77,11 @@ int main() {
 
   asn_enc_rval_t retf = asn_encode_to_buffer(0, ATS_BER,&asn_DEF_Message, message, buffer_final, buffer_final_size);
 
-  xer_fprint(stdout, &asn_DEF_Message, message);
+  FILE *fp;
+  fp = fopen("../decode/encoded.xml", "w");
+
+  xer_fprint(fp, &asn_DEF_Message, message);
+
+  fclose(fp);
 
 }

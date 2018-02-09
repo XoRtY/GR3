@@ -12,12 +12,12 @@
 #include "ANY.h"
 #include "Message.h"
 
-int main() {
+int main(int argc, char const *argv[]) {
 
   SimpleSyntax_t* simple;
   simple = calloc(1, sizeof(SimpleSyntax_t));
   simple->present = SimpleSyntax_PR_integer_value;
-  simple->choice.integer_value = 1;
+  simple->choice.integer_value = atoi(argv[1]); //1234
 
   ObjectSyntax_t* object_syntax;
   object_syntax = calloc(1, sizeof(ObjectSyntax_t));
@@ -26,8 +26,8 @@ int main() {
 
   ObjectName_t* object_name;
   object_name = calloc(1, sizeof(ObjectName_t));
-  object_name->buf = "ip";
-  object_name->size = 2;
+  object_name->buf = (char* )argv[2]; //"1.3.2.1"
+  object_name->size = sizeof(argv[2]);
 
   VarBind_t* var_bind;
   var_bind = calloc(1, sizeof(VarBind_t));
@@ -41,7 +41,7 @@ int main() {
 
   SetRequest_PDU_t* setRequestPDU;
   setRequestPDU = calloc(1, sizeof(GetRequest_PDU_t));
-  setRequestPDU->request_id = 1;
+  setRequestPDU->request_id = atoi(argv[3]); // 1
   setRequestPDU->error_index = 0;
   setRequestPDU->error_status = 0;
   setRequestPDU->variable_bindings = *varlist;
@@ -62,9 +62,9 @@ int main() {
   data->size = ret.encoded;
 
   OCTET_STRING_t community;
-  community.buf = strdup("public");
-  community.size = 6;
-  long version = 3;
+  community.buf = strdup(argv[4]); //public
+  community.size = sizeof(community.buf);
+  long version = atoi(argv[5]); // 2
 
   Message_t* message;
   message = calloc(1, sizeof(Message_t));
@@ -78,9 +78,11 @@ int main() {
   asn_enc_rval_t retf = asn_encode_to_buffer(0, ATS_BER,&asn_DEF_Message, message, buffer_final, buffer_final_size);
 
   FILE *fp;
-  fp = fopen("../decode/encoded.xml", "w");
+  fp = fopen("../decode/encoded.bin", "w");
 
-  xer_fprint(fp, &asn_DEF_Message, message);
+  printf("%ld", simple->choice.integer_value);
+
+  fwrite(buffer_final, retf.encoded, 1, fp);
 
   fclose(fp);
 

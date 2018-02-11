@@ -11,6 +11,8 @@
 #include "PDUs.h"
 #include "ANY.h"
 #include "Message.h"
+#include "creates.h"
+
 
 int main(int argc, char const *argv[]) {
 
@@ -39,12 +41,7 @@ int main(int argc, char const *argv[]) {
   varlist = calloc(1, sizeof(VarBindList_t));
   int r = ASN_SEQUENCE_ADD(&varlist->list, var_bind);
 
-  SetRequest_PDU_t* setRequestPDU;
-  setRequestPDU = calloc(1, sizeof(GetRequest_PDU_t));
-  setRequestPDU->request_id = atoi(argv[3]); // 1
-  setRequestPDU->error_index = 0;
-  setRequestPDU->error_status = 0;
-  setRequestPDU->variable_bindings = *varlist;
+
 
   PDUs_t *pdus;
   pdus = calloc(1, sizeof(PDUs_t));

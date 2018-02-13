@@ -70,7 +70,7 @@ int main(int argc, char const *argv[]) {
   int i = 0;
   char buffer[100];
   while(i < ipsize){
-    itoa(object_name.buf[i],buffer,10);
+    snprintf(object_name.buf[i], sizeof(object_name.buf[i]), "%d",buffer);
     strcat(ip,buffer);
     if(i!= ipsize - 1)
       strcat(ip,".");

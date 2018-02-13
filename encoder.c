@@ -166,7 +166,7 @@ int main(int argc, char const *argv[]) {
 
   uint8_t encodeResFinal[1024];
   size_t ResFinalSize = sizeof(encodeResFinal);
-  asn_enc_rval_t valueFinal = finalEncode(encodeResFinal, ResFinalSize, message);
+  asn_enc_rval_t valueFinal = EndEncode(encodeResFinal, ResFinalSize, message);
   printf("Final encodinh done\n");
 
 
@@ -182,6 +182,16 @@ int main(int argc, char const *argv[]) {
   }
   fclose(fp);
 
-  
+  File * fpDebug;
+  fpDebug = fopen("debugFile.xml","w");
+  if(spDebug == NULL){
+    perror("debugFile.xml errosr");
+    return -1;
+  }
 
+  xer_fprint(fpDebug, &asn_DEF_Message, message);
+  printf("Debug success\n");
+  fclose(fpDebug);
+
+  return 0;
 }

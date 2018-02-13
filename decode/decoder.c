@@ -45,9 +45,43 @@ int main(int argc, char const *argv[]) {
 
   SimpleSyntax_t simple = object_syntax.choice.simple;
 
-  FILE *out;
+  PDUs_PR requestType = pdu->present;
+  char* snmpC;
+  long version = message->version;
+  char* community = message->community.buf;
+  if(requestType == PDUs_PR_get_request){
+    snmpC = "get";
+  }
+  else 
+    if(requestType == PDUs_PR_get_bulk_request){
+      snmpC = "bulkget";
+    }
+    else
+      if(requestType == PDUs_PR_get_next_request){
+        snmpC = "getnext";
+      }
+      else
+        if(requestType == PDUs_PR_set_request){
+          snmpC = "set";
+        }
+  
+  int ipsize = object_name.size;
+  char* ip = malloc(sizeof(char) * (ipsize + ipsize));
+  int i = 0; int j = 0;
+  while(i < ipsize){
+    ip[j] = object_name.buf[i];
+    j++;
+    ip[j] = '.';
+    j++
+  }
+  ip[j] = '\0'
+  printf("snmp%s -v %ld -c %s %s", snmpC, version, community, ip);
 
-  out = fopen("decoded.txt", "w");
-  fprintf(out, "%ld\n%s\n%ld\n%ld\n%s\n", simple.choice.integer_value, object_name.buf, pdu->choice.set_request.request_id, message->version, message->community.buf);
+  free(ip);
+
+  
+  //FILE *out;
+  //out = fopen("decoded.txt", "w");
+  //fprintf(out, "%ld\n%s\n%ld\n%ld\n%s\n", simple.choice.integer_value, object_name.buf, pdu->choice.set_request.request_id, message->version, message->community.buf);
 
 }

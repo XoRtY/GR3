@@ -74,9 +74,10 @@ int main(int argc, char const *argv[]) {
     strcat(ip,buffer);
     if(i!= ipsize - 1)
       strcat(ip,".");
+    i++
   }
   puts("Linha5");
-  printf("snmp%s -v %ld -c %s %s", snmpC, version, community, ip);
+  printf("snmp%s -v %ld -c %s %s\n", snmpC, version, community, ip);
 
   free(ip);
 

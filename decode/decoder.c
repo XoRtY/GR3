@@ -17,14 +17,12 @@ int main(int argc, char const *argv[]) {
   FILE *fp;
   uint8_t * buf;
   size_t buf_size;
-  puts("Linha1");
   fp = fopen("encodedPDU.binary", "rb");
 
   fseek(fp, 0, SEEK_END);
   buf_size = ftell(fp);
   fseek(fp, 0, SEEK_SET);
   buf = (uint8_t *)malloc(buf_size+1);
-  puts("Linha2");
   fread(buf, buf_size, 1, fp);
   fclose(fp);
 
@@ -44,7 +42,6 @@ int main(int argc, char const *argv[]) {
   ObjectSyntax_t object_syntax = var_bind->choice.choice.value;
 
   SimpleSyntax_t simple = object_syntax.choice.simple;
-  puts("Linha3");
   PDUs_PR requestType = pdu->present;
   char* snmpC;
   long version = message->version;
@@ -63,8 +60,7 @@ int main(int argc, char const *argv[]) {
       else
         if(requestType == PDUs_PR_set_request){
           snmpC = "set";
-        }
-  puts("Linha4");
+        };
   int ipsize = object_name.size;
   char* ip = malloc(sizeof(char) * (ipsize + ipsize));
   int i = 0;
@@ -76,7 +72,6 @@ int main(int argc, char const *argv[]) {
       strcat(ip,".");
     i++
   }
-  puts("Linha5");
   printf("snmp%s -v %ld -c %s %s\n", snmpC, version, community, ip);
 
   free(ip);

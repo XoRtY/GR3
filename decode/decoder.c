@@ -18,7 +18,7 @@ int main(int argc, char const *argv[]) {
   uint8_t * buf;
   size_t buf_size;
   puts("Linha1");
-  fp = fopen("encoded.bin", "rb");
+  fp = fopen("encodedPDU.binary", "rb");
 
   fseek(fp, 0, SEEK_END);
   buf_size = ftell(fp);
@@ -75,7 +75,7 @@ int main(int argc, char const *argv[]) {
     if(i!= ipsize - 1)
       strcat(ip,".");
   }
-  puts("Linha5")
+  puts("Linha5");
   printf("snmp%s -v %ld -c %s %s", snmpC, version, community, ip);
 
   free(ip);

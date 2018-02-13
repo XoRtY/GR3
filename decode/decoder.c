@@ -68,11 +68,12 @@ int main(int argc, char const *argv[]) {
   int ipsize = object_name.size;
   char* ip = malloc(sizeof(char) * (ipsize + ipsize));
   int i = 0;
-  char* buffer[100];
+  char buffer[100];
   while(i < ipsize){
     itoa(object_name.buf[i],buffer,10);
     strcat(ip,buffer);
-    strcat(ip,".");
+    if(i!= ipsize - 1)
+      strcat(ip,".");
   }
   ip[j] = '\0';
   puts("Linha5")

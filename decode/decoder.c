@@ -72,9 +72,9 @@ int main(int argc, char const *argv[]) {
     ip[j] = object_name.buf[i];
     j++;
     ip[j] = '.';
-    j++
+    j++;
   }
-  ip[j] = '\0'
+  ip[j] = '\0';
   printf("snmp%s -v %ld -c %s %s", snmpC, version, community, ip);
 
   free(ip);

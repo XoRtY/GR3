@@ -3,9 +3,9 @@ include Makefile.am.libasncodec
 LIBS += -lm
 CFLAGS += $(ASN_MODULE_CFLAGS) -DASN_PDU_COLLECTION -I.
 ASN_LIBRARY ?= libasncodec.a
-ASN_PROGRAM ?= encoder
+ASN_PROGRAM ?= decoder
 ASN_PROGRAM_SRCS ?= \
-	encoder.c\
+	decoder.c\
 	pdu_collection.c
 
 all: $(ASN_PROGRAM)

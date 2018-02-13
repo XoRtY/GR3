@@ -138,7 +138,7 @@ ObjectName_t * ObjectName(uint8_t* name,size_t name_size){
 }
 
 //Create var bind
-VarBind_t * VarBind(ObjectName_t *object_name, ObjectSyntax_t *object_syntax){
+VarBind_t * cVarBind(ObjectName_t *object_name, ObjectSyntax_t *object_syntax){
   VarBind_t * var_bind;
   var_bind = calloc(1, sizeof(VarBind_t));
   var_bind->name = *object_name;
@@ -330,7 +330,7 @@ ANY_t * ANY_t(uint8_t *buffer, asn_enc_rval_t r){
 }
 
 //Create Message
-Message_t * Message(long version, OCTET_STRING_t community, ANY_t* data){	
+Message_t * cMessage(long version, OCTET_STRING_t community, ANY_t* data){	
 	Message_t * message;
 	message = calloc(1, sizeof(Message_t));
 	message->version = version;

@@ -9,6 +9,7 @@
 #include "SetRequest-PDU.h"
 #include "GetRequest-PDU.h"
 #include "PDUs.h"
+#include "string.h"
 #include "ANY.h"
 #include "Message.h"
 #include "stdbool.h"
@@ -394,7 +395,7 @@ int main(int argc, char const *argv[]) {
           tmp = strtok (NULL, ".");
           i++;
         }
-    size_t ipSize = sizeof(ip);
+    size_t ipSize = strlen(ip);
 
     objectName = ObjectName( ip, ipSize);
     varBind = cVarBind( objectName, objectSyntax);
@@ -521,7 +522,7 @@ int main(int argc, char const *argv[]) {
   long v = atoi(argv[3]);
   OCTET_STRING_t oString;
   oString.buf = strdup(argv[5]);
-  oString.size = sizeof(oString.buf);
+  oString.size = strlen(oString.buf);
   Message_t * message = cMessage(v, oString,data);
 
   uint8_t encodeResFinal[2048];
@@ -530,7 +531,7 @@ int main(int argc, char const *argv[]) {
   printf("Final encodinh done\n");
 
 
-  FILE *fp = fopen("encodedPDU.binary","w");
+  FILE *fp = fopen("../decode/encodedPDU.binary","w");
   if(!fp){
     perror("File not found");
     return -1;

@@ -65,12 +65,13 @@ int main(int argc, char const *argv[]) {
   char* ip = malloc(sizeof(char) * (ipsize + ipsize));
   int i = 0;
   char buffer[100];
+  printf("decoding...\n");
   while(i < ipsize){
     snprintf(buffer, sizeof(buffer), "%d",object_name.buf[i]);
     strcat(ip,buffer);
     if(i!= ipsize - 1)
       strcat(ip,".");
-    i++
+    i++;
   }
   printf("snmp%s -v %ld -c %s %s\n", snmpC, version, community, ip);
 
